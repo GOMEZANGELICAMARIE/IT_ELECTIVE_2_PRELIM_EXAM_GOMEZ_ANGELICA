@@ -13,13 +13,17 @@ public class Category
     // EXERCISE 3: This constructor should initialize Name and Description to ""
     // Currently it does nothing - fix it!
     public Category()
-    {
+    {  
+            Name = "";
+            Description = "";  
     }
 
     // EXERCISE 4: This constructor should set Name and Description from parameters
     // Currently it does nothing - fix it!
     public Category(string name, string description)
     {
+        Name = name;
+        Description = description;
     }
 
     public override string ToString()
