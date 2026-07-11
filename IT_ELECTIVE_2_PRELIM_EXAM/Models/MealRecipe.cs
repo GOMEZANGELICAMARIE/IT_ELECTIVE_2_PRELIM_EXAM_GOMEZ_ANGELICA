@@ -1,5 +1,3 @@
-
-
 namespace IT_ELECTIVE_2_PRELIM_EXAM.Models;
 
 // EXERCISE 7: Inheritance - Derived Class
@@ -16,6 +14,8 @@ namespace IT_ELECTIVE_2_PRELIM_EXAM.Models;
 
 public class MealRecipe : RecipeBase //, IRecipeSearchable  <-- EXERCISE 9: Uncomment this
 {
+    private string title;
+
     // EXERCISE 7: These properties need to be wired up properly
     // Currently they're stubs that don't store values correctly
     public string Category { get; set; } = "";
@@ -28,6 +28,8 @@ public class MealRecipe : RecipeBase //, IRecipeSearchable  <-- EXERCISE 9: Unco
     public MealRecipe(string title, int prepTime, string difficulty)
         : base(title, prepTime, difficulty)
     {
+        Category = title;
+        Area = Area;
     }
 
     // EXERCISE 7: Create a constructor that also accepts category and area
@@ -36,10 +38,16 @@ public class MealRecipe : RecipeBase //, IRecipeSearchable  <-- EXERCISE 9: Unco
     public override string GetRecipeInfo()
     {
         // EXERCISE 7: Override to include Category and Area in the output
-        return base.GetRecipeInfo();
+        return $"{base.GetRecipeInfo()} | Category: {Category} | Area: {Area}";
     }
 
     // EXERCISE 9: Implement IRecipeSearchable interface methods here
-    // public string SearchCriteria => ???
-    // public bool MatchesSearch(string searchTerm) => ???
+
+    public string SearchCriteria => Title;
+
+    public bool MatchesSearch(string searchTerm)
+    {
+        if (string.IsNullOrEmpty(searchTerm)) return false;
+        return Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase);
+    }
 }
