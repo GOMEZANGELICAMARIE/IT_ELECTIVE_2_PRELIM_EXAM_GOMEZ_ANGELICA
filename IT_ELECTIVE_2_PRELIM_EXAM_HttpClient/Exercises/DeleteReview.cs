@@ -1,6 +1,4 @@
 using System.Net;
-using Xunit;
-
 namespace IT_ELECTIVE_2_PRELIM_EXAM_HttpClient.Exercises;
 
 // EXERCISE 8: DELETE Remove Review
@@ -19,9 +17,12 @@ public static class DeleteReview
         string url = "https://jsonplaceholder.typicode.com/posts/1";
 
         // Send DELETE request
-        var response = await client.DeleteAsync(url);
+        HttpResponseMessage response = await client.DeleteAsync(url);
 
         // Assert status code is 200 OK
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        if (response.StatusCode != HttpStatusCode.OK)
+        {
+            throw new Exception($"Expected 200 OK but got {response.StatusCode}");
+        }
     }
 }
