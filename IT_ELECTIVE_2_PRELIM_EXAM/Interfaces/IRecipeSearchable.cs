@@ -9,6 +9,14 @@ namespace IT_ELECTIVE_2_PRELIM_EXAM.Interfaces;
 
 public interface IRecipeSearchable
 {
-    string SearchCriteria { get; }
-    bool MatchesSearch(string searchTerm);
+    public string Title { get; set; }
+    public string Ingredients { get; set; }
+    public string Instructions { get; set; }
+
+    public string SearchCriteria => Title;
+
+    public bool MatchesSearch(string searchTerm)
+    {
+        return Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase);
+    }
 }

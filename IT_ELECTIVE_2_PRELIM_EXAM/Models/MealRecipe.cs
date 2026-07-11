@@ -1,3 +1,5 @@
+using IT_ELECTIVE_2_PRELIM_EXAM.Interfaces;
+
 namespace IT_ELECTIVE_2_PRELIM_EXAM.Models;
 
 // EXERCISE 7: Inheritance - Derived Class
@@ -12,10 +14,8 @@ namespace IT_ELECTIVE_2_PRELIM_EXAM.Models;
 // - Implement the SearchCriteria property (return the Title)
 // - Implement the MatchesSearch(string searchTerm) method (check if searchTerm is in Title, case-insensitive)
 
-public class MealRecipe : RecipeBase //, IRecipeSearchable  <-- EXERCISE 9: Uncomment this
+public class MealRecipe : RecipeBase, IRecipeSearchable //, IRecipeSearchable  <-- EXERCISE 9: Uncomment this
 {
-    private string title;
-
     // EXERCISE 7: These properties need to be wired up properly
     // Currently they're stubs that don't store values correctly
     public string Category { get; set; } = "";
@@ -28,8 +28,15 @@ public class MealRecipe : RecipeBase //, IRecipeSearchable  <-- EXERCISE 9: Unco
     public MealRecipe(string title, int prepTime, string difficulty)
         : base(title, prepTime, difficulty)
     {
-        Category = title;
-        Area = Area;
+        Category = "";
+        Area = "";
+    }
+
+    public MealRecipe(string title, int prepTime, string difficulty, string category, string area)
+        : base(title, prepTime, difficulty)
+    {
+        Category = category;
+        Area = area;
     }
 
     // EXERCISE 7: Create a constructor that also accepts category and area
@@ -42,8 +49,10 @@ public class MealRecipe : RecipeBase //, IRecipeSearchable  <-- EXERCISE 9: Unco
     }
 
     // EXERCISE 9: Implement IRecipeSearchable interface methods here
-
     public string SearchCriteria => Title;
+
+    public string Ingredients { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public string Instructions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
     public bool MatchesSearch(string searchTerm)
     {
