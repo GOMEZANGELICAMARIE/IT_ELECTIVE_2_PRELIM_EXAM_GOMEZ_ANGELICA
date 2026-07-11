@@ -1,3 +1,5 @@
+using System.Xml.Linq;
+
 namespace IT_ELECTIVE_2_PRELIM_EXAM.Models;
 
 // EXERCISE 2: Encapsulation - Validation in Property Setter
@@ -8,13 +10,38 @@ namespace IT_ELECTIVE_2_PRELIM_EXAM.Models;
 
 public class Ingredient
 {
-    public string Name { get; set; }
+    private string name;
+    private double quantity;
+
+    public string Name
+    {
+        get => name;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Name cannot be null or empty.");
+
+            name = value;
+        }
+    }
+
     public string Measure { get; set; }
-    public double Quantity { get; set; }
+
+    public double Quantity
+    {
+        get => quantity;
+        set
+        {
+            if (value < 0)
+                throw new ArgumentOutOfRangeException(nameof(Quantity), "Quantity cannot be negative.");
+
+            quantity = value;
+        }
+    }
 
     public Ingredient()
     {
-        Name = "";
+        Name = "Unknown";
         Measure = "";
         Quantity = 0;
     }
@@ -25,6 +52,8 @@ public class Ingredient
         Measure = measure;
         Quantity = quantity;
     }
+
+
 
     public override string ToString()
     {
