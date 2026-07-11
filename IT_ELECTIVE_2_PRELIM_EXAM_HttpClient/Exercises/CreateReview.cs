@@ -23,33 +23,33 @@ public static class CreateReview
 
         string url = "https://jsonplaceholder.typicode.com/posts";
 
-        // 1. Create a JSON body string
+        
         string json = "{\"title\": \"Great Pasta!\", \"body\": \"Loved this recipe\", \"userId\": 1}";
 
-        // 2. Wrap it in StringContent with UTF8 encoding and media type "application/json"
+        
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        // 3. Send a POST request to the URL
+        
         HttpResponseMessage response = await client.PostAsync(url, content);
 
-        // 4. Assert status code is 201 Created
+        
         if (response.StatusCode != System.Net.HttpStatusCode.Created)
         {
             throw new Exception($"Assertion failed: Status code was {response.StatusCode}, expected 201 Created.");
         }
 
-        // 5. Parse the response JSON
+        
         string responseString = await response.Content.ReadAsStringAsync();
         using JsonDocument doc = JsonDocument.Parse(responseString);
         JsonElement root = doc.RootElement;
 
-        // Assert the response has an "id" field with a value
+        
         if (!root.TryGetProperty("id", out JsonElement idProperty))
         {
             throw new Exception("Assertion failed: Response JSON does not contain an 'id' field.");
         }
 
-        // Make sure it actually has a value populated (JSONPlaceholder returns 101 for successful posts)
+       
         if (idProperty.GetRawText() == null)
         {
             throw new Exception("Assertion failed: 'id' field value is null.");
