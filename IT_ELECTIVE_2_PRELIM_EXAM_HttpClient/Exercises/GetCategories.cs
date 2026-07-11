@@ -1,3 +1,8 @@
+using System;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks; 
+
 namespace IT_ELECTIVE_2_PRELIM_EXAM_HttpClient.Exercises;
 
 // EXERCISE 4: GET List Categories
@@ -14,11 +19,26 @@ public static class GetCategories
 {
     public static async Task Run(System.Net.Http.HttpClient client)
     {
-        // TODO: Send GET request to https://themealdb.com/api/json/v1/1/categories.php
-        // TODO: Assert status code is 200 OK
-        // TODO: Parse the response JSON
-        // TODO: Assert the "categories" array has more than 0 items
+        string url = "https://themealdb.com/api/json/v1/1/categories.php";
 
-        throw new NotImplementedException();
+        HttpResponseMessage response = await client.GetAsync(url);
+
+        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+        {
+            throw new Exception($"Assertion failed: Status code was {response.StatusCode}, expected 200 OK.");
+        }
+        string responseString = await response.Content.ReadAsStringAsync();
+        using JsonDocument doc = JsonDocument.Parse(responseString);
+        JsonElement root = doc.RootElement;
+
+        if (!root.TryGetProperty("categories", out JsonElement categoriesArray) || categoriesArray.ValueKind != JsonValueKind.Array)
+        {
+            throw new Exception("Assertion failed: Response JSON does not contain a valid 'categories' array.");
+        }
+
+        if (categoriesArray.GetArrayLength() == 0)
+        {
+            throw new Exception("Assertion failed: The 'categories' array contains 0 items.");
+        }
     }
 }

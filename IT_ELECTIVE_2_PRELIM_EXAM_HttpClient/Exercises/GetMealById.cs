@@ -46,7 +46,6 @@ public static class GetMealById
 
         string mealName = strMealProp.GetString();
 
-        // FIXED: Using Contains instead of an exact match to handle the updated API value "Spicy Arrabiata Penne"
         if (string.IsNullOrEmpty(mealName) || !mealName.Contains("Arrabiata", StringComparison.OrdinalIgnoreCase))
         {
             throw new Exception($"Assertion failed: Expected meal name to contain 'Arrabiata', but got '{mealName}'.");

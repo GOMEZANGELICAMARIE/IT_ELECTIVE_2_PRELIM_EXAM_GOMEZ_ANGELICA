@@ -19,21 +19,18 @@ public static class FilterByIngredient
     {
         string url = "https://themealdb.com/api/json/v1/1/filter.php?i=chicken_breast";
 
-        // 1. Use the HttpClient to filter meals by ingredient "chicken_breast"
         HttpResponseMessage response = await client.GetAsync(url);
 
-        // 2. Assert status code is 200 OK
         if (response.StatusCode != System.Net.HttpStatusCode.OK)
         {
             throw new Exception($"Assertion failed: Status code was {response.StatusCode}, expected 200 OK.");
         }
 
-        // 3. Parse the response JSON
+ 
         string responseString = await response.Content.ReadAsStringAsync();
         using JsonDocument doc = JsonDocument.Parse(responseString);
         JsonElement root = doc.RootElement;
 
-        // Assert the "meals" array has at least 1 item
         if (!root.TryGetProperty("meals", out JsonElement mealsArray) || mealsArray.ValueKind != JsonValueKind.Array)
         {
             throw new Exception("Assertion failed: Response JSON does not contain a valid 'meals' array.");

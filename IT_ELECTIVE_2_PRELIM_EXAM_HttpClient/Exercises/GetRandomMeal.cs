@@ -21,20 +21,15 @@ public static class GetRandomMeal
     public static async Task Run(System.Net.Http.HttpClient client)
     {
         string url = "https://themealdb.com/api/json/v1/1/random.php";
-
-        // 1. Use the HttpClient to send a GET request to the URL above
         HttpResponseMessage response = await client.GetAsync(url);
 
-        // 3. Assert that the status code is 200 OK
         if (response.StatusCode != System.Net.HttpStatusCode.OK)
         {
             throw new Exception($"Assertion failed: Status code was {response.StatusCode}, expected 200 OK.");
         }
 
-        // 2. Read the response as a string
         string responseBody = await response.Content.ReadAsStringAsync();
 
-        // 4. Assert that the response body is not null or empty
         if (string.IsNullOrEmpty(responseBody))
         {
             throw new Exception("Assertion failed: Response body is null or empty.");
