@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace IT_ELECTIVE_2_PRELIM_EXAM.Models;
 
 // EXERCISE 7: Inheritance - Base/Derived Classes
